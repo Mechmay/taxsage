@@ -1,21 +1,22 @@
-import { PrivyProvider as PrivyProviderBase } from '@privy-io/react-auth';
-import { ReactNode } from 'react';
+import { PrivyProvider as Provider } from '@privy-io/react-auth';
+import { PropsWithChildren } from 'react';
 
-const PRIVY_APP_ID = "classy-insert-your-app-id"; // Replace with your Privy app ID
+export const PrivyProvider = ({ children }: PropsWithChildren) => {
+  // Use a fallback ID if environment variable is not set
+  const appId = import.meta.env.VITE_PRIVY_APP_ID || "clue-vacation-fallback";
 
-export const PrivyProvider = ({ children }: { children: ReactNode }) => {
   return (
-    <PrivyProviderBase
-      appId={PRIVY_APP_ID}
+    <Provider
+      appId={appId}
       config={{
-        loginMethods: ['wallet', 'email'],
+        loginMethods: ['email', 'wallet'],
         appearance: {
           theme: 'light',
-          accentColor: '#4F46E5',
+          accentColor: '#676FFF',
         },
       }}
     >
       {children}
-    </PrivyProviderBase>
+    </Provider>
   );
 };
